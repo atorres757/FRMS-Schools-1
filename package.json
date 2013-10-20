@@ -1,0 +1,8 @@
+{
+  "name": "FRMS-Schools",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+  	"mongoose" : "3.x.x"
+  }
+}
