@@ -1,9 +1,9 @@
 var mongoose = require('mongoose')
-  	, Schema = mongoose.Schema;
+  , Schema = mongoose.Schema;
 
  /**
-  * School Schema 
-  */
+   * School Schema
+   */
 var SchoolSchema = new Schema({
   _id: {
     type: Number
@@ -62,5 +62,8 @@ var SchoolSchema = new Schema({
     default: Date.now
   }
 });
+
+// Ensure geospatial index
+SchoolSchema.index({location: '2dsphere'});
 
 mongoose.model('School', SchoolSchema);
