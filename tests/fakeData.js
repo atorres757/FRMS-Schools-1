@@ -3,18 +3,17 @@ var schools = require('../models/school')
   , mongoose = require('mongoose')
   , http = require('http');
   
-fakery.generator('u_name', function() {
+fakery.generator('uni_name', function() {
     var name = fakery.g.surname();
     return name() + ' University';
 });
 
-// use like this
-var u_nameGen = fakery.g.u_name();
+var uni_nameGen = fakery.g.uni_name();
   
 fakery.fake('school', mongoose.model('School'), {
-  _id: fakery.g.rndint(0, 10000),
-  name: u_nameGen(),
-  preferred_name: '',
+  _id: fakery.g.rndint(0, 100000),
+  name: uni_nameGen(),
+  preferred_name: 'fake_school',
   abbreviation: fakery.g.str(1, 3),
   short_name: '',
   vanity_name: '',
@@ -33,25 +32,28 @@ fakery.fake('school', mongoose.model('School'), {
     coordinates: [fakery.g.rndint(-120, -70), fakery.g.rndint(30, 50)]
   }
 });
-var fake = fakery.make('school')
-  , fakeStr = JSON.stringify(fake)
-  , options = { host: 'localhost'
+var options = { host: 'localhost'
       , path: '/schools'
-      , headers: {'Content-Type': 'application/json'}
-      , port: '4001'
-      , method: 'PUT'
-    };
+        , headers: {'Content-Type': 'application/json'}
+        , port: '4001'
+        , method: 'PUT'
+      };
 
-console.log('Inserting:' + fakeStr);
-var req = http.request(options, function(response) {
-  var str = ''
-  response.on('data', function (chunk) {
-    str += chunk;
-  });
+for(var i = 0; i < 20000; i++) {
+  var fake = fakery.make('school')
+    , fakeStr = JSON.stringify(fake);
 
-  response.on('end', function () {
-    console.log(str);
+  console.log('Inserting:' + fakeStr);
+  var req = http.request(options, function(response) {
+    var str = '';
+    response.on('data', function (chunk) {
+      str += chunk;
+    });
+  
+    response.on('end', function () {
+      console.log(str);
+    });
   });
-});
-req.write(fakeStr);
-req.end();
+  req.write(fakeStr);
+  req.end();
+}
