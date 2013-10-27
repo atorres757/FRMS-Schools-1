@@ -52,6 +52,18 @@ module.exports = {
 		});
 	},
 	
+	notUpdatedSince: function(req, res, next) {
+	  School.find({updated: {$lt: new Date(req.params.time)}})
+	      .exec(function(err, schools) {
+          if(err) {
+            res.send(500, err);
+          } else {
+            res.json(schools);
+          }
+          return next();
+		    });
+	},
+	
 	upsert: function(req, res, next) {
 	  var schoolId = req.body._id;
 	  req.body.updated = Date.now();

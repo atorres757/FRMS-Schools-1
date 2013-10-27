@@ -39,7 +39,7 @@ var options = { host: 'localhost'
         , method: 'PUT'
       };
 
-for(var i = 0; i < 20000; i++) {
+for(var i = 0; i < 5000; i++) {
   var fake = fakery.make('school')
     , fakeStr = JSON.stringify(fake);
 

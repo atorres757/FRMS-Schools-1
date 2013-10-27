@@ -62,7 +62,8 @@ var SchoolSchema = new Schema({
   }
 });
 
-// Ensure geospatial index
+// Ensure indexes
 SchoolSchema.index({location: '2dsphere'});
+SchoolSchema.index({updated: 1});
 
 mongoose.model('School', SchoolSchema);
