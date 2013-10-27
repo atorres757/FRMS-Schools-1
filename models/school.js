@@ -32,6 +32,9 @@ var SchoolSchema = new Schema({
   web_address: {
     type: String
   },
+  updated: {
+    type: Date
+  },
   address: {
     address: {
       type: String
@@ -56,10 +59,6 @@ var SchoolSchema = new Schema({
     coordinates: {
       type: Array
     }
-  },
-  modified: {
-    type: Date,
-    default: Date.now
   }
 });
 

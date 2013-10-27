@@ -54,8 +54,8 @@ module.exports = {
 	
 	upsert: function(req, res, next) {
 	  var schoolId = req.body._id;
-	  delete req.body._id; // findOneAndUpdate() doesn't like use to play with _id
-	  delete req.body.modified; // always set modified to Now
+	  req.body.updated = Date.now();
+	  delete req.body._id; // findOneAndUpdate() doesn't like us to play with _id
 
     School.findOneAndUpdate({ _id: schoolId }
         , req.body
